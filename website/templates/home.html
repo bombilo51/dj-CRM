@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+HELLO
+
+{% else %}
+
+<h1> To begin <a href="{% url "login" %}"> Log in </a> or <a href="{% url "register" %}"> Register </a>  </h1>
+
+{% endif %}
+
+{% endblock content %}

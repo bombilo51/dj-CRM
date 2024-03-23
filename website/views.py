@@ -2,10 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm
+from .models import Record
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def home (request):
-    return render(request, 'home.html', {})
+    records = Record.objects.all()
+
+    return render(request, 'home.html', {'records':records})
 
 
 def login_user(request):
@@ -35,7 +39,7 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     messages.success(request, "You've been logged out!")
-    return render(request, 'home.html')
+    return redirect('home')
 
 def register_user(request):
     if request.method == 'POST':
@@ -56,3 +60,41 @@ def register_user(request):
 
     return render(request, 'register.html', {'form':form})
 
+def customer_record(request, pk):
+
+    if not request.user.is_authenticated:
+        messages.success(request, "You must be logged in to view this page!")
+        return redirect('home')
+
+    try:
+        record = Record.objects.get(id=pk)
+        return render(request, 'record.html', {'record':record})
+    except ObjectDoesNotExist as e:
+        messages.success(request, f"Object with id: {pk} doesn't exist!")
+        return redirect('home')
+    except Exception as e:
+        messages.success(request, "Unknown exception:" + e.__str__)
+        return redirect('home') 
+
+def delete_customer_record(request, pk):
+    try:
+        record = Record.objects.get(id=pk)
+        record.delete()
+        messages.success(request, f"Object {record} with id: {pk} Deleted")
+    except ObjectDoesNotExist as e:
+        messages.success(request, f"Object with id: {pk} doesn't exist!")
+    except Exception as e:
+        messages.success(request, e)
+
+    return redirect('home')
+
+def create_record(request):
+    messages.success(request, f"Not implemented yet! (create_record)")
+
+    if request.method == 'POST':
+        create_record_post()
+
+    return redirect('home')
+
+def create_record_post(request):
+    return redirect('home')

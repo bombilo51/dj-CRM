@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    
+<table class="table table-hover table-bordered m-2">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>{{record.last_name}} {{record.first_name}} {{record.middle_name}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Phone number</td>
+             <td>{{record.phone}}</td>
+        </tr>
+        <tr>
+            <td>IIN</td>
+            <td>{{record.iin}}</td>
+        </tr>
+        <tr>
+            <td>UDO</td>
+            <td>{{record.udo}}</td>
+        </tr>
+        <tr>
+            <td>City</td>
+            <td>{{record.city}}</td>
+        </tr>
+    </tbody>
+</table>
+<a href="{% url "delete" pk=record.id %}" class="btn btn-danger m-3">Delete</a> </br>
+<a href="{% url "home" %}" class="btn btn-primary m-3">Back</a>
+{% endblock %}

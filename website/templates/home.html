@@ -3,7 +3,45 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-HELLO
+
+    {% if records %}
+
+    <table class="table table-hover table-bordered ">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Middle Name</th>
+          <th scope="col">Phone Number</th>
+          <th scope="col">IIN</th>
+          <th scope="col">UDO</th>
+          <th scope="col">City</th>
+          <th scope="col">link</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in records %}
+        <tr>
+          <th scope="row"> {{record.id}} </th>
+          <td> {{record.last_name}} </td>
+          <td> {{record.first_name}} </td>
+          <td> {{record.middle_name}} </td>
+          <td> {{record.phone}} </td>
+          <td> {{record.iin}} </td>
+          <td> {{record.udo}} </td>
+          <td> {{record.city}} </td>
+          <td> <a href="{% url " record" pk=record.id%}"> Details </a> </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% else %}
+      <h3>There are no records yet!</h3>
+      <a href="{% url "create" %}" class="btn btn-primary m-3">Add record</a>
+
+    {% endif %}
 
 {% else %}
 

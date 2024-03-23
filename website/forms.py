@@ -29,11 +29,12 @@ class SignUpForm(UserCreationForm):
     
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'lsat_name', 'email', 'password1', 'password2')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
 
-        def __init__(self, *args, **kwargs) -> None:
-            super(SignUpForm, self).___init__(*args, **kwargs)
 
+    def __init__(self, *args, **kwargs):
+            super(SignUpForm, self).__init__(*args, **kwargs)
+            
             self.fields['username'].widget.attrs['class'] = 'form-control'
             self.fields['username'].widget.attrs['placeholder'] = 'User Name'
             self.fields['username'].label = ''
